@@ -220,6 +220,13 @@ watch/r 0x0808fe18	#14
 0x08043dbc = shop entry array ROM
 0x08044bb0 = shop item entry pool ROM
 
+0201C6001A000F00
+0201C7001A000F00
+0201D3001A001E00
+0201D10012005000
+0201D40011009600
+02012F011A00C800
+
 0x020034ae = number of foldrbak
 0x087050b0 = "FolderBak" text string in ROM
 0x08001a88 = The "nono" list
