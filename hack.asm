@@ -16,12 +16,12 @@
 
 ; Add Nav Recycle to Undernet 2 Bugfrag Vendor Item List
 .org 0x08044e60
-	.byte 0x02  		; Type (0 = Nothing, 1 = Item, 2 = BattleChip, 3 = NaviCust Program)
-	.byte 0x01  		; (0xFF = unlimited)
+	.byte 0x02			; Type (0 = Nothing, 1 = Item, 2 = BattleChip, 3 = NaviCust Program)
+	.byte 0x01			; (0xFF = unlimited)
 	.halfword 0x0130	; Item/BattleChip/Program index (16-bit)
 	.byte 0x1A			; Chip code/Program color (8-bit)
-	.byte 0x00 			; Unused byte
-	.halfword 0x00C8 	; Price in 100z/1 BugFrag (16-bit)
+	.byte 0x00			; Unused byte
+	.halfword 0x00C8	; Price in 100z/1 BugFrag (16-bit)
 
 ; Todo add proper sorting so the giga chips don't mangle the library display
 
