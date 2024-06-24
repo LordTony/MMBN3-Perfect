@@ -1,0 +1,231 @@
+0x020018f4 = money
+0x020018f8 = bug frags
+0x02001dca = number of fights 
+0x0200227a = number of Shockwave J
+0x02001881 = style (does not properly adjust mega chip count or start battle chip count)
+             0x11 elec cust
+			 0x12 heat cust
+			 0x13 aqua cust
+			 0x14 wood cust
+             0x19 elec team
+			 0x1c wood team
+			 0x34 wood shadow
+0x02005783 = number of chips at the start of every battle
+0x02005784 = number of mega chips allowed in deck
+0x02005785 = number of giga chips allowed in deck
+
+== Press ==
+0x02005798 = press can be equiped ALWAYS if you set this to 1
+0x02001ad0 = number of "press" navi cust programs
+0x0812d93c = function where press is checkedx
+
+0x02001b04 = number of "beat" navi customizer programs
+0x020012f8 = megaman sprite width scaling
+0x020012f9 = megaman sprite height scaling
+			 0xc0 small (same as with Press active)
+			 0x40 normal
+			 0x20 huge
+
+0x011a = chip id of mistman
+0x011f = chip id of bowlman v1
+0x0120 = chip id of bowlman v2
+0x0121 = chip id of bowlman v3
+0x0122 = chip id of bowlman v4
+0x2003334 = count of mistman v1
+0x2003348 = count of mistman v2
+0x2003358 = count of mistman v3
+0x200336a = count of mistman v4
+0x200337c = count of mistman v5
+
+0x08007df4 = set to 01 to bypass chip validity checks
+
+0x2000353 = set to FF because it uses a bitmask to determine mistman v1-v5 <== mistman lockout part1 (1 byte)
+0x20019b0 = set to A4 <== mistman lockout part2 (2 bytes)
+0x20019b1 = set to E1
+            It looks like the part2 lockout is based on the info in the part 1 lockout.
+			
+0x872d2e1 = Goethe was a German
+0x802686E = ^== where this joke is loaded into memory
+0x200189a = are you currently talking to someone (bool)
+
+0x8019d28 = BowlMan's Life Total from ROM
+0x8019d10 = MistMan Omega Life Total from ROM
+0x8005AF4 = Line of code the reads in BowlMan's Life
+0x80147BC = Line of code the reads in BowlMan's Life x2
+  
+watch/w 0x0200f8c8 = This is the spot in memory where the pointer to the enemy code is loaded
+                     from when a battle starts.
+					 BowlMan Beta = 0x0801A754
+                     Punk = 0x0801A8E4
+					 Yurt Yoyo thing x2 = 0x0801AA98
+					 Scutz x2 = 0x0801A460
+					 Plantman Omega = 0x0801A250
+					 Desertman Beta = 0x0801A190
+					 Darkman = 0x0801A950
+					 
+0x0812c294 = Converstaion Battle breakpoint, set r0 to enemy encounter
+0x0812bc98 = Table of possible conversation battles
+0x0812be98 = bowlman's entry in that table
+
+Fight MistMan Omega 
+  break 0x0812c294
+  Talk to Bowl Man or any other Fight NPC
+  w/r r0 0x0801A760 //changing from 0x0801A754
+  
+Fight MistMan Beta
+  only MistMan Omega is in the encounter redirect tables at 0x0801A760
+  but the data for fighting mistman v1, v2, and v3 are all there in the load monster table
+  We just need to change 0x0801A764 from 0x05DF to 0x05DE
+  - Just changed the encounter's offset into the monster table
+    
+  
+bug frag trader notes: 
+  fills up 0x02036800-0x02036??? with random options, sometimes it's bigger than other times
+  does this in the code between 0x08042D62 and 0x08042d7c. 
+  Somehow this "fill with crap" algorthm doesn't give bowl man chips. How do they do that?
+  
+  It looks like 0x02035800 is a more stable and might be where the random table above 
+  is being filled from.
+  starts with 0003 0200 0006 0101 as I look at it now.
+  It looks like it fills up when you say "yes" to the bug frag trader. All you need to do now is find where in the ROM this thing is being read.
+  
+  0x8042658 - 0x08042bc0 = table of stuff the bug frag trader machine can give you.
+  
+Override Bug Frag Trader Options to enable MistMan
+
+0x08042b28 0b => 1a             MetalMan V1 => MistMan V1
+0x08042b68 15 01 0a => 1b 01 0c KingMan  V1 => MistMan V2
+0x08042b88 24 01 03 => 1c 01 0c DarkMan  V1 => MistMan V3
+0x08042ba8 29 01 18 => 1d 01 0c JapanMan V1 => MistMan V4 
+
+==== Post battle chip choosing ====
+Chips are written 0x02037910 (2 bytes)
+- The bits are compressed the first 7 bits are the "code" and the last 9 bits are the chip ID
+  - for instance bowl man's code is 0x01 for B and the id is 0x011f
+  - Code '0000 001'+'1 0001 1111' = 0x031f
+
+0x080160a8 = Drop table start coords
+0x080160a8 + EnemyCode * 0x38 = Drop Table for any enemy
+0x08019218 = Bowlman's Drop table
+0x08008240 = Code that reads the drop table after battle
+
+
+0x0801922b = bowl man's V3 chip drop ROM and next to it are the others
+- read at 0x080082CA
+
+0x08235170 = A BUNCH OF UNUSED ROM!
+0x02001dd0 = can be used as a coin flip
+
+== Stuff that only applies when you are in bowlman's area ==
+
+== little program guy ===
+Appears at progress level 33
+0x0200459c = sprite of program next to bowl man
+             - 59 for MistMan
+0x0200457c = conversation entry point the program
+0x0200458a = position of the program from above
+            - change from 82 to 12
+			
+0x0808fe31 = rom address of this guy (48 => 59 for mistman)
+0x0808fe2a = rom address of conversation entry point 
+             - 60 for Mistman spar message
+0x0808fe2f = need to change from 10 to 08 to get mistman to show up correctly
+0x0808fe35 = change from 82 to 12 to move close to bowl man
+
+== bowlman info ==
+0x64 = Min progress for him to show
+0x02004660 = sprite of bowlman object
+0x02004640 = conversation entry point for bowlman
+0x0808ff5c = rom address of bowlman's load level sprite
+0x080F170C = Line that writes the sprite
+
+== bowlman / mistman convo data ==
+add the following offsets to 0x02037800 to find the text scripts
+
+C3 08 / 0x020380bd / 1D - Come back any time
+0f 08 / 0x0203800f / - Graaagh And I was serious that time
+	  
+F8 04 / 0x02037cf8 / XX = do you think you're strong enough?
+0E 09 / 0x0203810e / 20 = Lan, do you want to BetBattle MistMan?
+0x0AD6 = I'll take you any time, Lan => fight (bowl man)
+0x0B02 = fight (Probably meant to be with mistman, but it's bowlman)
+0x0B22 = You conceal a great strength. Use it wisely, and grow.
+0x0B5E = You are still far from the power of Serendate. Practice!
+0x0B9C = Your training has paid off, and you have grown greatly. 
+         Perhaps even to where you can take on Serenade...
+0x0C0A = ...
+0x0C13 = There is no shame in defeat
+0x0C36 = I will spar with you any time you wish. Come when you need! => fight (bowl man)
+0x0A99 = I'm not just the same old GutsMan I am... NeoGutsMan! (What)
+0x0A2B = A battle sold is a battle bought. This is Underwolrd law.
+		 Time for you to see what I can really do.
+0x09F3 = Growth comes through defeat...
+		 Prepare to grow => fight (bowl man)
+0x09C6 = Let's just see what you're made of... => fight (bowl man)
+0x0989 = A warrior must rest at times. And this is such a time...
+0x0972 = Try me any time...
+		 
+
+0x0876274A = LZ77 compressed text for bowlman's room
+0x08761E00 = The "Top" of the compressed data 
+0x020387FE = Where text goes after decompression
+
+0x0203869E = "Ready runt" <== bowlman line
+0x02037814 = "Ready runt" dialog map entry
+0x02037A00 = "Goal Offsite" <== weird little guy line
+0x02035d50 = Bowl Man Battle Question 
+0x0203???? = I just love knocking your pins down for you
+0x02037F12 = Conversation that just starts a battle with bowlman beta
+0x02037cf8 = MistMan V3 Battle Conversation (0x04F8 from the map)
+
+========================
+0x02037800 = Start of the dialog map. Offsets to the conversations (2 bytes)
+========================
+
+=== CONVERSATIONS ====
+E7 = end dialog + do not continue reading
+E8 = line break
+E9 = open new dialog
+EB = show cursor + wait for input
+ED 00 = display face image 
+F1 01 = Start a fight
+F2 00 = Set a flag
+F2 04 = Clear a flag
+F3 00 = Check a flag
+F5 00 XX = warp to another conversation at position XX on the dialog map
+FF = Continue the text script in place of a branch (used in F3 trees)
+
+Flag Info
+
+0x0200027b = blue version is 06 and white version is 04?
+0x02001886 = game progress? I'm at 79
+
+After Ghidra's "Check_Progress_2" it goes to different every frame level functions based on progress. I don't know how it maps the progress to the functions yet though
+
+Loading the little guy =
+watch/r 0x0808fda0	#7
+watch/r 0x0808fdac	#8
+watch/r 0x0808fdb8	#9
+watch/r 0x0808fdd4	#10
+watch/r 0x0808fde4	#11 No Bowl Man
+watch/r 0x0808fdf0	#12
+watch/r 0x0808fe00	#13
+watch/r 0x0808fe18	#14
+
+0x2037968 / 0x2037e85 / 0685 / b4 => shop dialog (Undernet 2 bugfrag trader in demon pillar)
+7edb = I'm all outa chips
+
+0x02003860 = shop entry array RAM
+0x020035e0 = shop item entry pool RAM
+0x08043dbc = shop entry array ROM
+0x08044bb0 = shop item entry pool ROM
+
+0x020034ae = number of foldrbak
+0x087050b0 = "FolderBak" text string in ROM
+0x08001a88 = The "nono" list
+
+0x08013af0 = foldrBak chip data
+0x08013af0 = chip family
+0x08013b10 = navRcycl
+
+0x086B710C = the "does not exist" chip sprite

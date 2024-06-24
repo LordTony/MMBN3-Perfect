@@ -1,0 +1,196 @@
+0x08235170 = A BUNCH OF UNUSED ROM!
+0x02001dd0 = can be used as a coin flip
+
+PSEUDO CODE
+
+if(r0 == 0x0801A754)
+{
+	r1 = value at 0x02008E01
+	r1 = r1 & #1
+	if(r1 == 1) {
+		// We will need to create it in our free space
+		// We will also need to create the battle data it is pointing to
+		ldr r6, [mistmanBetaBattleData]
+		r6,[r7,#0x2c]
+	}
+}
+
+Rough Draft
+// Will need to update the pointer in the ldr r6,[PTR_DAT_080146b8]
+
+START AFTER "str r6=>DAT_0200f8c8 ,[r7,#0x2c]"
+09 4c			ldr r4, [PTR_bowlmanBetaBattleData]
+20 45			cmp r0, r4
+09 d1			bne END
+07 4c			ldr r4, [PTR_clock]
+21 78			ldrb r1, [r4, #0]
+c9 07			lsl r1, r1, #31
+c9 0f			lsr r1, r1, #31
+01 29           cmp r1, #1
+01 d1			bne END
+03 48			ldr r0, [PTR_mistmanBetaBattleData]
+70 60			str r0,[r6,#0x4]
+c0 bd			END: pop        { r6, r7, pc }
+00 00			// THIS IS JUST FOR LDR SPACING
+PTR_DAT_080146b8: c8 f8 00 02
+PTR_bowlmanBetaBattleData: 54 A7 01 08
+PTR_mistmanBetaBattleData: address of mistmanBetaBattleData
+PTR_clock: D0 1D 00 02
+mistmanBetaBattleData: 00 01 02 00 DE 05 02 01 FF
+
+
+0x08007eca = possibly unused function to hijack
+Send to wipe_check override 0x0812d93c
+old = 19 f7 fa fc
+new = da f6 c5 fa
+
+- hijack wipe_check
+before:
+	08007eca 00  b5           	push       { lr }
+	08007ecc ff  f7  ee  ff    	bl         verify_chips_phase_1                             
+	08007ed0 00  42           	tst        r0,r0
+	08007ed2 08  d0           	beq        LAB_08007ee6ZX
+	08007ed4 ff  f7  b4  ff    	bl         verify_all_chips                                 
+	08007ed8 00  42           	tst        r0,r0
+
+- thumb code to read number of "press" navi cust programs you own
+  // get value at memory address 0x02001ad0 into r0 and return it
+  // return it
+after:
+	08007eca 00  b5           push       { lr }
+	08007ecc 02  21           mov        r1,#0x02
+	08007ece 09  04           lsl        r1,r1,#0x10
+	08007ed0 1a  31           add        r1,#0x1a
+	08007ed2 09  02           lsl        r1,r1,#0x8
+	08007ed4 d0  31           add        r1,#0xd0
+	08007ed6 08  78           ldrb       r0,[ r1,#0x0 ]
+	08007ed8 00  bd           pop        { pc }
+	
+after take 2:
+    08007eca 00  b5           push       { lr }
+    08007ecc 01  49           ldr        r1, [ pc, #0x1 ] // This will load 5 bytes ahead for some reason?
+	08007ece 08  78           ldrb       r0, [ r1,#0x0 ]
+	08007ed0 00  bd           pop        { pc }
+	08007ed2 LEAVE ALONE
+	08007ed4 d0  1a  00  02   // Address 02001ad0 loaded in backwards
+	
+	
+=== Get Mistman next to bowlman ===
+============= STRAT ===============
+
+0x02005550 seems to be unused ram
+Update the table 
+0x0812be78 = change from 0x0801A73c => 0x02005550
+             - bowlman
+0x0812be88 = change from 0x0801A748 => 0x02005550
+             - bowlman alpha
+0x0812be98 = change from 0x0801A754 => 0x02005550
+             - bowlman beta
+			 
+Override the function here
+0x0808fd48 <= This normally sets which bowlman version to fight based on flags
+           - We need to write a function which will do all the same stuff
+		     but will also write "00 02 02 00 XX 05 02 01" to 0x02005550
+		     where XX is
+             - DC = MistMan
+			 - DD = MistMan Alpha
+			 - DE = MistMan Beta
+			 - E0 = BowlMan
+			 - E1 = BowlMan Alpha
+			 - E2 = BowlMan Beta
+
+Since it already writes 0x1e, 0x1f, 0x20 we can just add 0xC2 onto whatever that value is
+to get bowlman fights and substract 0x4 if we want mistman fights.
+
+How to distinguish which fight we want?
+- Check flag "5e 12" which is basically "blue or white"
+  - if flag is set, Bowlman 
+  - else Mistman
+
+Odds and Ends
+- Make bowlman a little higher up
+- Turn the little program in the corner into mistman - 0x0808fe2a
+- Make mistman a little lower down
+- Move him closer to bowlman
+- redirect his conversation pointers
+  - make sure it works with normal/alpha/beta
+  
+
+== Choose which fight based on flag ==
+
+after all of the normal code, but before pop { pc }
+
+ff 2e			cmp r6, #0xff
+00 db			blt (skip next instruction)
+00 bd			pop { pc } // return early 
+0f b4			push { r0, r1, r2, r3 }
+13 4b			ldr, r3, [bowlman_battle_definition_register]
+//"00 02 02 00 XX 05 02 01"
+
+00 22			mov r2, #0x00
+1a 70			strb r2, [r3, 0x0]
+da 70			strb r2, [r3, 0x3]
+02 22			mov r2, #0x02
+5a 70			strb r2, [r3, 0x1]
+9a 70			strb r2, [r3, 0x2]
+9a 71			strb r2, [r3, 0x6]
+05 22			mov r2, #0x05
+5a 71			strb r2, [r3, 0x5]
+01 22			mov r2, #0x01
+da 71			strb r2, [r3, 0x7]
+
+10 15			ldr	r0, [checkFlagParam]
+
+ec f5 ab fd		jump CheckFlag()
+c2 22			mov r2, #0xb9
+32 44			add r2, r6
+00 28			cmp r0, #0x0
+00 d1			bne (skip next instruction)
+04 3a			sub r2, r2, #0x04
+1a 71			strb r2, [r3, #0x4]
+
+// later
+// mov r0, #0x12
+// mov r1, #0x5e
+// jump UnSetFlag()
+
+08 bc			pop { r3, r2, r1, r0, pc }
+04 bc
+02 bc
+01 bc
+00 bd
+
+
+=== TAKE 2 ===
+Override "LoadBattle"
+ADD TO ROM
+00 02 02 00 E0 05 02 01 FF  <= B Standard
+00 02 02 00 E1 05 02 01 FF  <= B Alpha
+00 02 02 00 E2 05 02 01 FF  <= B Beta
+00 02 02 00 DC 05 02 01 FF  <= M Standard
+00 02 02 00 DD 05 02 01 FF  <= M Alpha
+00 02 02 00 DE 05 02 01 FF  <= M Beta
+
+Override
+
+0x0812be78 = 0x00000000 <= Standard
+0x0812be88 = 0x00000010 <= Alpha
+0x0812be98 = 0x00000020 <= Beta
+
+Before
+`080146b0 70  60 str EnemyData,[r6,#0x4]`
+
+FF 28		cmp r0 0xff
+10 dc		bgt normal stuff			<=== Trying 10
+1e b4			push { r1, r2, r3, r4 }
+?? 4b			ldr r3, [newMap] 		<=== trying 14
+1c 18			add r4, r3, r0]	
+?? 48			ldr r0, [whichFlag] //12 5e 	<=== trying 10
+ec f5 cd fd		bl checkFlag()
+01 d1			bne 01
+30 23				mov r3 0x30
+e4 18				add r4, r4, r3
+20 00			mov r0, r4
+1e bc			pop { r1, r2, r3, r4 }
+			//normal rest of code here
+
