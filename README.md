@@ -40,7 +40,9 @@ A Rom Hack for Mega Man Battle Network 3 - Blue that aims to add everything from
 
 - Change out the title screen? Maybe pay someone on fiver for the pixel art.
 
-- Add in the white version exclusive styles is it "ground style"? I forgot, look that up.
+- "Ground Style"
+  
+  - On top of just adding it, I will need to figure out what the algorithm for choosing ground style is. Hopefully it's still in the game and just rerolls whenever ground style shows up.
 
 - Might be impossible at my current skill level, but I would love to have some kind of system where you can switch freely between styles you've unlocked already.
   
@@ -53,5 +55,9 @@ A Rom Hack for Mega Man Battle Network 3 - Blue that aims to add everything from
     - Don't really like this idea even though it's baby easy to implement.
 
 - The code to get the 5th star and unlock the giga chip navis isn't hinted at anywhere in the game. I either need to add that into a fortune cookie or just remove the need  for that code altogether. What were they thinking with this? The only way to get those Giga chips was to look them up online? People playing the game legit in the schoolyards were probably getting curb-stomped by normies because all the good stuff was impossible to get without cheating.
+
+- Mr. Famous' apprentice
+
+  - Should I care about this? Maybe it won't be that much trouble to add
 
 - More...? Who knows? I will probably find more stuff
