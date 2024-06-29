@@ -220,6 +220,7 @@ watch/r 0x0808fe18	#14
 0x08043dbc = shop entry array ROM
 0x08044bb0 = shop item entry pool ROM
 
+Undernet 2 vendor shop data for copy pasting
 0201C6001A000F00
 0201C7001A000F00
 0201D3001A001E00
@@ -236,3 +237,11 @@ watch/r 0x0808fe18	#14
 0x08013b10 = navRcycl
 
 0x086B710C = the "does not exist" chip sprite
+0x086BC10C = folderbak sprite
+
+NavRcycle is at 6F4460 - 6F4B60 in the White gba rom.
+The chunk after it is color palette data?
+"chunk" size is 0x20
+Full size of a sprite plus color palette data = 0x720 bytes
+so in all 6F4460 - 6F4B7F NavRecycl
+all the way to 6F67FF to get all the gigachips
