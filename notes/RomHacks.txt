@@ -55,7 +55,6 @@ before:
 
 - thumb code to read number of "press" navi cust programs you own
   // get value at memory address 0x02001ad0 into r0 and return it
-  // return it
 after:
 	08007eca 00  b5           push       { lr }
 	08007ecc 02  21           mov        r1,#0x02
