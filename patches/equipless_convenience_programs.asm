@@ -16,7 +16,7 @@
     cmp r0, #0 
     beq LAB_0812d97a
 
-; creating labels into the original code
+// creating labels into the original code
 .org 0x0812d97a
     LAB_0812d97a:
 
