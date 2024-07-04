@@ -245,3 +245,37 @@ The chunk after it is color palette data?
 Full size of a sprite plus color palette data = 0x720 bytes
 so in all 6F4460 - 6F4B7F NavRecycl
 all the way to 6F67FF to get all the gigachips
+
+
+0x0800591a code that checks for a second reward?
+0x08007422 possibly just before we grab the value from memory
+0x0800742a writes chip value to 0x0200f332
+0x0200f332 gets set to chip value... when?
+0x02036842 gets set to chip value after battle
+0x0236950 gets set to chip value after battle
+0x08008B58 puts the chip data there
+0x0203b390 - 0x0203b3d0 = 5 rows of ram look like they are the reward tables, only loaded for a moment
+looks like 0x08008A9A writes there but it's like, all the time
+
+0x020024dd = number of Rope G chips owned
+
+=== Give Second Chip Post Battle ===
+
+  - NavRcycl 0x130 	*	Handled at the shop
+  - AlphArmΣ 0x131 	V	Final combo 0x2b31
+  - Bass 0x132 		X	Final combo 0x2f32
+  - Serenade 0x133 	S	Final combo 0x2533
+  - Balance 0x134 	Y	Final combo 0x3134
+  
+0x35130
+break 0x0x080081A4
+w/2 sp+32 0x3530
+
+- Doesn't give bug frags because it steals the screen for it
+- In this example 0x3530 is [NavRcycl *]
+- Doesn't use the "no-no" anti-cheat list the shops have
+  - So you can get the good stuff
+- The bits are compressed the first 7 bits are the "code" and the last 9 bits are the chip ID
+  - for instance bowl man's code is 0x01 for B and the id is 0x011f
+  - Code '0000 001'+'1 0001 1111' = 0x031f
+  
