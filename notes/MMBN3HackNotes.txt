@@ -260,22 +260,28 @@ looks like 0x08008A9A writes there but it's like, all the time
 0x020024dd = number of Rope G chips owned
 
 === Give Second Chip Post Battle ===
+0x35130
+break 0x080081A4
+w/2 sp+32 0x3530 (This is for NavRcycl *)
 
+- Doesn't give bug frags because it steals the screen for it
+- Doesn't use the "no-no" anti-cheat list the shops have
+  - So you can get the good stuff
+  
+- The bits are compressed the first 7 bits are the "code" and the last 9 bits are the chip ID
+  - for instance bowl man's code is 0x01 for B and the id is 0x011f
+  - Code '0000 001'+'1 0001 1111' = 0x031f
+  
   - NavRcycl 0x130 	*	Handled at the shop
   - AlphArmΣ 0x131 	V	Final combo 0x2b31
   - Bass 0x132 		X	Final combo 0x2f32
   - Serenade 0x133 	S	Final combo 0x2533
   - Balance 0x134 	Y	Final combo 0x3134
+  - Bass GS 0x138   X   Final combo 0x2f38
   
-0x35130
-break 0x0x080081A4
-w/2 sp+32 0x3530
-
-- Doesn't give bug frags because it steals the screen for it
-- In this example 0x3530 is [NavRcycl *]
-- Doesn't use the "no-no" anti-cheat list the shops have
-  - So you can get the good stuff
-- The bits are compressed the first 7 bits are the "code" and the last 9 bits are the chip ID
-  - for instance bowl man's code is 0x01 for B and the id is 0x011f
-  - Code '0000 001'+'1 0001 1111' = 0x031f
-  
+=== Multiple rewards ===
+0x0203790c 1 byte = which reward screen you are on
+0x0203790d 1 byte = at the end of battle, this is the number of rewards you will get
+0x02037910 2 byte = first reward to give
+0x02037912 2 byte = second reward to give
+0x02037914 2 byte = third reward to give, but it overwrites whatever you put there every frame

@@ -15,6 +15,10 @@ A Rom Hack for Mega Man Battle Network 3 - Blue that aims to add everything from
   - Press ✅
   - EngyChng ✅
 
+## Current Research Goal
+
+- Find out how to make the giga chip reward use the normal checkboard swipe effect
+
 ## How to build / use / install
 
 - Will worry about this part once I have a bit more progress
