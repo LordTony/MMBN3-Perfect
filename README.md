@@ -17,7 +17,7 @@ A Rom Hack for Mega Man Battle Network 3 - Blue that aims to add everything from
 
 ## Current Research Goal
 
-- Find out how to make the giga chip reward use the normal checkboard swipe effect
+- Why won't the Punk chip show up in the library?
 
 ## How to build / use / install
 
@@ -62,6 +62,10 @@ A Rom Hack for Mega Man Battle Network 3 - Blue that aims to add everything from
 
 - Re-battle the Omega Navis
   - I think I might just be able to steal a mod that does this already and reverse engineer that one.
+
+- Be able to feed more bug frags to the friendly viruses
+  - I think 1 and 5 are the options.
+  - Maybe a 10, 20, 30, 40, 50 and however_many_left
 
 ## Things that won't be changed, but is still tempting
 

@@ -1,0 +1,99 @@
+break 0x0812c294
+
+w/r r0 0x08019E8C GutsMan
+w/r r0 0x08019E98 GutsMan Alpha
+w/r r0 0x08019F2C
+w/r r0 0x0801A0F4
+w/r r0 0x0801A490
+w/r r0 0x0801A86C
+w/r r0 0x0801A490
+w/r r0 0x0801A4A4
+w/r r0 0x0801A4B8
+w/r r0 0x0801A4CC
+w/r r0 0x0801A4E0
+w/r r0 0x0801A4F4
+w/r r0 0x0801A508
+w/r r0 0x0801A51C
+w/r r0 0x0801A530 Mushy/Mashy/Moshy Friendly Virus
+w/r r0 0x0801A544
+w/r r0 0x0801A558 Jelly, HeatJelly, ErthJelly Friendly Virus
+w/r r0 0x0801A56C
+w/r r0 0x0801A580
+w/r r0 0x0801A594
+w/r r0 0x0801A5A8
+w/r r0 0x0801A5BC
+w/r r0 0x0801A5D0
+w/r r0 0x0801A5E4
+w/r r0 0x0801A5F4
+w/r r0 0x0801A1E0 GutsMan Beta
+w/r r0 0x0801A108
+w/r r0 0x0801A11C
+w/r r0 0x0801A878
+w/r r0 0x0801A884 KingMan Beta
+w/r r0 0x0801A73C BowlMan
+w/r r0 0x0801A748 BowlMan Alpha
+w/r r0 0x0801A754 BowlMan Beta
+w/r r0 0x0801A8CC Punk
+w/r r0 0x0801A8D8
+w/r r0 0x0801A8E4
+w/r r0 0x0801A8F0 ProtoMan
+w/r r0 0x0801A8FC
+w/r r0 0x0801A908 ProtoMan Beta
+w/r r0 0x0801AE38 Error Number
+w/r r0 0x0801AE4C
+w/r r0 0x0801AE60
+w/r r0 0x0801AE74
+w/r r0 0x0801AE88
+w/r r0 0x0801AE9C
+w/r r0 0x08019E24 FlashMan Alpha
+w/r r0 0x0801A6E4 BeastMan Alpha
+w/r r0 0x0801A010 BubbleMan Alpha
+w/r r0 0x0801A184 DesertMan Alpha
+w/r r0 0x0801A238 PlantMan Alpha
+w/r r0 0x0801A3D0 FlameMan Alpha
+w/r r0 0x0801A810 DrillMan Alpha
+w/r r0 0x0801A95C DarkMan Alpha
+w/r r0 0x0801A9BC
+w/r r0 0x0801AEDC
+w/r r0 0x0801AF04
+w/r r0 0x0801AF50
+w/r r0 0x0801AF6C
+w/r r0 0x0801AF88
+w/r r0 0x0801B018
+w/r r0 0x0801B02C
+w/r r0 0x0801AF14 Fishy, Fishy, Dominerd2
+w/r r0 0x0801AF28
+w/r r0 0x0801AF3C
+w/r r0 0x0801B0CC
+w/r r0 0x0801B0E0
+w/r r0 0x0801B0F4 Pengy Omega, Slimer Omega, Jelly Omega
+w/r r0 0x0801B108
+w/r r0 0x0801B11C
+w/r r0 0x0801A3E8
+w/r r0 0x0801A828
+w/r r0 0x0801A974
+w/r r0 0x0801A9D4
+w/r r0 0x0801B184
+w/r r0 0x0801A454 Omega Bass
+w/r r0 0x0801A130
+w/r r0 0x0801A1EC
+w/r r0 0x0801A6FC
+w/r r0 0x08019E3C
+w/r r0 0x0801A914
+w/r r0 0x0801A19C Desert Man Omega
+w/r r0 0x0801A890
+w/r r0 0x0801A760 MistMan Omega
+w/r r0 0x0801B130
+w/r r0 0x0801A250
+w/r r0 0x0801A030
+w/r r0 0x0801A448
+
+
+EC = Serenade
+ED = Serenade Alpha
+EE = Serenade Beta
+EF = Serenade Omega
+F0 = Bass
+F1 = Bass
+F2 = BassGS
+F3 = Bass Omega

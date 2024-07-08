@@ -4,6 +4,8 @@
 
 .definelabel press_programs_owned_address, 0x02001ad0
 
+// This code doesn't seem like it should work
+// step through this later
 .org 0x0812d980
     LDR R0, [PC, #0]
     .word press_programs_owned_address

@@ -285,3 +285,25 @@ w/2 sp+32 0x3530 (This is for NavRcycl *)
 0x02037910 2 byte = first reward to give
 0x02037912 2 byte = second reward to give
 0x02037914 2 byte = third reward to give, but it overwrites whatever you put there every frame
+
+0x08014fd2 = logic here for how to show the dissolve
+0x080147c2 = breakpoint to look at where the monster data is loaded
+0x02037353 = the enemy ID of the monster you just fought
+
+// Help for the weird lag issue
+break 0x080158b4 = The place the stop first and then "frame" through the check the lag
+watch/w 0x0203790b = timer that seems to be causing the lag
+
+without mod
+
+c => 0x08014FAA writes a 1
+c => 0x08014FB8 writes a 0
+
+with mod
+
+c => 0x08014FAA writes a 1E
+c => 0x08014FB8 counts down to 0 over like 34 frames
+
+break 0x08014fa2
+without mod
+with mod
