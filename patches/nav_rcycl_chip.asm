@@ -5,13 +5,6 @@
 //////////////////
 
 //
-// Override the giga chip anti-cheat no-no list for vendors
-//
-
-.org 0x08001a86
-    .fill 26, 0xff
-
-//
 // Add NavRcycl to Undernet 2 Bugfrag Vendor Item List
 //
 

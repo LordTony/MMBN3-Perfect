@@ -53,7 +53,7 @@
 .macro write_chip_data, index
     .org start_of_chip_data + (0x20 * index)
         .skip 0xe
-        .halfword (0xf000 + index)
+        .halfword (0x00f0 + index)
         .skip 0x8
         .word gigchip_data_address + (chip_art_and_palette_size * index)
         .word gigchip_data_address + (chip_art_and_palette_size * index) + chip_art_size
